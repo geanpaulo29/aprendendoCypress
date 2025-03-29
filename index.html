@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
-<html lang="pt-br">
+<html lang="pt-BR">
+
 
 <head>
 
@@ -8,45 +9,80 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Cadastro de Usuário</title>
+    <title>Avaliação do Veículo</title>
+
+    <script>
+
+        function enviarAvaliacao() {
+
+            document.getElementById('loading').style.display = 'block';
+
+
+            setTimeout(() => {
+
+                document.getElementById('loading').style.display = 'none';
+
+
+                const nome = document.getElementById('nome').value;
+
+                const comentario = document.getElementById('comentario').value;
+
+
+                if (!nome || !comentario) {
+
+                    alert("Por favor, preencha todos os campos.");
+
+                    return;
+
+                }
+
+
+                const novaAvaliacao = document.createElement('p');
+
+                novaAvaliacao.textContent = `${nome}: ${comentario}`;
+
+                document.getElementById('avaliacoes').appendChild(novaAvaliacao);
+
+
+                document.getElementById('nome').value = "";
+
+                document.getElementById('comentario').value = "";
+
+            }, 3000);
+
+        }
+
+    </script>
 
 </head>
 
+
 <body>
 
-    <h2>Formulário de Cadastro</h2>
-
-    <form id="cadastro">
-
-        <label for="nome">Nome:</label>
-
-        <input type="text" id="nome" name="nome" required><br><br>
+    <h1>Avaliação do Veículo</h1>
 
 
-        <label for="email">E-mail:</label>
+    <form id="avaliacao-form" onsubmit="event.preventDefault(); enviarAvaliacao();">
 
-        <input type="email" id="email" name="email" required><br><br>
+        <input type="text" id="nome" placeholder="Digite seu nome" required>
 
+        <textarea id="comentario" placeholder="Descreva sua experiência com o veículo..." required></textarea>
 
-        <label for="telefone">Telefone:</label>
-
-        <input type="tel" id="telefone" name="telefone" pattern="^\d{10}$" required><br><br>
-
-
-        <label for="senha">Senha:</label>
-
-        <input type="password" id="senha" name="senha" required><br><br>
-
-
-        <label for="confirma_senha">Confirmar Senha:</label>
-
-        <input type="password" id="confirma_senha" name="confirma_senha" required><br><br>
-
-
-        <button type="submit">Cadastrar</button>
+        <button id="submit-button" type="submit">Enviar Avaliação</button>
 
     </form>
 
+
+    <p id="loading" style="display: none;">Enviando avaliação...</p>
+
+
+    <h2>Avaliações</h2>
+
+    <div id="avaliacoes"></div>
+
 </body>
 
+
 </html>
+
+

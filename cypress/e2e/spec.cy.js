@@ -1,20 +1,46 @@
-describe('Formulário de Cadastro', () => {
-  it('Preenche e envia o formulário com sucesso', () => {
-    cy.visit('index.html');
+describe('Teste de Avaliação de Veículo', () => {
+  beforeEach(() => {
+      cy.visit('index.html');
+  });
 
-    cy.get('#nome').type('João Silva');
-    cy.get('#email').type('joao.silva@email.com');
-    cy.get('#telefone').type('1199999999');
-    cy.get('#senha').type('Teste@123');
-    cy.get('#confirma_senha').type('Teste@123');
+  it('Verifica se os elementos estão visíveis', () => {
+      cy.contains('h1', 'Avaliação do Veículo').should('be.visible');
+      cy.get('#nome').should('be.visible');
+      cy.get('#comentario').should('be.visible');
+      cy.get('#submit-button').should('be.visible');
+      cy.get('#avaliacoes').should('be.empty');
+  });
 
-    cy.get('#nome').should('have.value', 'João Silva');
-    cy.get('#email').should('have.value', 'joao.silva@email.com');
-    cy.get('#telefone').should('have.value', '1199999999');
-    cy.get('#senha').should('have.value', 'Teste@123');
-    cy.get('#confirma_senha').should('have.value', 'Teste@123');
+  it('Valida textos e atributos', () => {
+      cy.get('#submit-button').should('have.text', 'Enviar Avaliação');
+      cy.get('#nome').should('have.attr', 'placeholder', 'Digite seu nome');
+      cy.get('#comentario').should('have.attr', 'placeholder', 'Descreva sua experiência com o veículo...');
+  });
 
-    cy.get('form').submit();
+  it('Testa envio de avaliação com dados válidos', () => {
+      cy.get('#nome').type('João');
+      cy.get('#comentario').type('Ótimo carro, muito confortável!');
+      cy.get('#submit-button').click();
 
+      cy.get('#loading').should('be.visible');
+      cy.wait(3000);
+      cy.get('#loading').should('not.be.visible');
+      cy.get('#avaliacoes').contains('João: Ótimo carro, muito confortável!');
+  });
+
+  it('Testa erro ao enviar sem nome', () => {
+      cy.get('#comentario').type('Muito econômico!');
+      cy.get('#submit-button').click();
+      cy.on('window:alert', (str) => {
+          expect(str).to.equal('Por favor, preencha todos os campos.');
+      });
+  });
+
+  it('Testa erro ao enviar sem comentário', () => {
+      cy.get('#nome').type('Maria');
+      cy.get('#submit-button').click();
+      cy.on('window:alert', (str) => {
+          expect(str).to.equal('Por favor, preencha todos os campos.');
+      });
   });
 });
