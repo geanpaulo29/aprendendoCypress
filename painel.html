@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Painel do Aluno</title>
+</head>
+<body>
+  <h1>Bem-vindo, aluno!</h1>
+  <a href="/meus-cursos.html">Meus Cursos</a>
+  <button id="logout">Sair</button>
+
+  <script>
+    if (localStorage.getItem('autenticado') !== 'true') {
+      window.location.href = '/login.html';
+    }
+
+    document.getElementById('logout').addEventListener('click', () => {
+      localStorage.removeItem('autenticado');
+      window.location.href = '/login.html';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - EduTech</title>
+</head>
+<body>
+  <h1>Login</h1>
+  <form id="login-form">
+    <input id="email" type="email" placeholder="E-mail" required />
+    <input id="senha" type="password" placeholder="Senha" required />
+    <button type="submit">Entrar</button>
+  </form>
+
+  <script>
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const senha = document.getElementById('senha').value;
+
+      if (email === 'aluno@edutech.com' && senha === 'curso123') {
+        localStorage.setItem('autenticado', 'true');
+        window.location.href = '/painel.html';
+      } else {
+        alert('E-mail ou senha incorretos!');
+      }
+    });
+  </script>
+</body>
+</html>
