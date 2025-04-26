@@ -7,7 +7,7 @@ describe('Testes da plataforma EduTech', () => {
     it('Navegar da Home para a página de Login', () => {
       cy.visit('/home.html');
       cy.contains('Entrar').click();
-      cy.url().should('include', '/login.html');
+      cy.url().should('include', 'http://127.0.0.1:5500/login.html');
     });
   
     it('Realizar login com sucesso', () => {
